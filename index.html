@@ -3,206 +3,207 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Netflix Core Retention & Engagement Analytics Pipeline</title>
+    <title>Netflix India User Retention Command Deck</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
-<body class="bg-[#05070c] text-slate-300 min-h-screen font-sans antialiased selection:bg-red-600 selection:text-white">
+<body class="bg-[#0a0d14] text-slate-300 min-h-screen font-sans antialiased selection:bg-red-600 selection:text-white">
 
-    <header class="border-b border-zinc-900 bg-[#05070c]/90 backdrop-blur sticky top-0 z-50">
+    <!-- Top Simplified Bar -->
+    <header class="border-b border-zinc-900 bg-[#0a0d14]/90 backdrop-blur sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
             <div class="flex items-center space-x-3">
-                <div class="h-9 w-24 bg-gradient-to-r from-red-600 to-red-800 rounded flex items-center justify-center font-black tracking-tighter text-white text-sm shadow-lg shadow-red-600/10">
-                    NETFLIX_ENG
-                </div>
-                <div class="hidden sm:block border-l border-zinc-800 pl-3">
-                    <span class="font-mono text-[10px] text-zinc-500 uppercase tracking-widest block">Event Ingestion Mesh</span>
-                    <span class="text-[9px] text-emerald-400 font-mono tracking-wider block flex items-center gap-1">
-                        <span class="h-1.5 w-1.5 rounded-full bg-emerald-500 inline-block animate-ping"></span> TELEMETRY STREAM ONLINE
-                    </span>
-                </div>
+                <div class="bg-red-600 px-3 py-1 rounded text-white font-black text-xs tracking-wider">NETFLIX INDIA</div>
+                <span class="text-xs font-mono text-zinc-500 tracking-wider">Live User Behavior Monitor</span>
             </div>
             <div class="flex items-center space-x-3">
-                <button onclick="toggleTelemetryStream()" id="streamBtn" class="bg-red-600/10 hover:bg-red-600 border border-red-600/30 text-red-500 hover:text-white font-mono font-bold text-[10px] px-3 py-1.5 rounded cursor-pointer transition-all duration-150">
-                    ⏸ PAUSE TELEMETRY
+                <button onclick="toggleTelemetryStream()" id="streamBtn" class="bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-zinc-300 font-mono text-[10px] px-3 py-1.5 rounded cursor-pointer transition-colors">
+                    ⏸ PAUSE STREAM
                 </button>
-                <span class="hidden md:inline px-2.5 py-1 rounded text-[10px] font-mono font-bold bg-zinc-900 border border-zinc-800 text-zinc-400">PIPELINE ARCHITECTURE: EVENT-DRIVEN</span>
             </div>
         </div>
     </header>
 
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
         
-        <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            <div class="bg-zinc-950/60 border border-zinc-900 p-4 rounded-xl relative overflow-hidden">
-                <span class="text-[9px] font-mono font-bold text-zinc-500 uppercase tracking-wider block">Ingested User Actions</span>
-                <span class="text-2xl font-mono font-black text-white mt-1 block" id="kpi-events">0</span>
-                <span class="text-[9px] text-red-400 font-mono mt-0.5 block">+1.8s live event telemetry pulse</span>
+        <!-- CLEAR BUSINESS INSIGHT GRID (Speaks by just looking) -->
+        <section class="grid grid-cols-1 md:grid-cols-3 gap-5">
+            <!-- Metric 1 -->
+            <div class="bg-gradient-to-br from-zinc-900 to-black border border-zinc-800 p-5 rounded-xl">
+                <div class="flex justify-between items-start">
+                    <span class="text-xs font-bold uppercase tracking-wider text-zinc-400">1. Users Monitored</span>
+                    <span class="text-xs bg-indigo-500/10 text-indigo-400 px-2 py-0.5 rounded font-mono">Real-time Stream</span>
+                </div>
+                <div class="text-3xl font-black text-white mt-2 font-mono" id="kpi-events">0</div>
+                <p class="text-xs text-zinc-500 mt-2">Total active user events captured in the current session pool.</p>
             </div>
-            <div class="bg-zinc-950/60 border border-zinc-900 p-4 rounded-xl">
-                <span class="text-[9px] font-mono font-bold text-zinc-500 uppercase tracking-wider block">Calculated Churn Risk Profiles</span>
-                <span class="text-2xl font-mono font-black text-rose-500 mt-1 block" id="kpi-risk-profiles">0</span>
-                <span class="text-[9px] text-zinc-500 font-mono mt-0.5 block">Engagement score index &lt; 40%</span>
+
+            <!-- Metric 2 -->
+            <div class="bg-gradient-to-br from-zinc-900 to-black border border-zinc-800 p-5 rounded-xl">
+                <div class="flex justify-between items-start">
+                    <span class="text-xs font-bold uppercase tracking-wider text-rose-400">2. High Churn Risk</span>
+                    <span class="text-xs bg-rose-500/10 text-rose-400 px-2 py-0.5 rounded font-mono">Needs Attention</span>
+                </div>
+                <div class="text-3xl font-black text-rose-500 mt-2 font-mono" id="kpi-risk-profiles">0</div>
+                <p class="text-xs text-zinc-500 mt-2">Users showing sudden drops in streaming watch-time metrics.</p>
             </div>
-            <div class="bg-zinc-950/60 border border-zinc-900 p-4 rounded-xl">
-                <span class="text-[9px] font-mono font-bold text-zinc-500 uppercase tracking-wider block">Active Retention Offers Pushed</span>
-                <span class="text-2xl font-mono font-black text-emerald-400 mt-1 block" id="kpi-mitigated">0</span>
-                <span class="text-[9px] text-emerald-500/60 font-mono mt-0.5 block">Automated email/push mutations</span>
-            </div>
-            <div class="bg-zinc-950/60 border border-zinc-900 p-4 rounded-xl">
-                <span class="text-[9px] font-mono font-bold text-zinc-500 uppercase tracking-wider block">Monitored Multi-Session Value</span>
-                <span class="text-2xl font-mono font-black text-amber-500 mt-1 block" id="kpi-value">$0</span>
-                <span class="text-[9px] text-zinc-500 font-mono mt-0.5 block">Real-time cache valuation aggregation</span>
+
+            <!-- Metric 3 -->
+            <div class="bg-gradient-to-br from-zinc-900 to-black border border-zinc-800 p-5 rounded-xl">
+                <div class="flex justify-between items-start">
+                    <span class="text-xs font-bold uppercase tracking-wider text-emerald-400">3. Estimated Revenue Lost</span>
+                    <span class="text-xs bg-emerald-500/10 text-emerald-400 px-2 py-0.5 rounded font-mono">Monthly Rate</span>
+                </div>
+                <div class="text-3xl font-black text-emerald-400 mt-2 font-mono" id="kpi-value">₹0</div>
+                <p class="text-xs text-zinc-500 mt-2">Total subscription money lost per month if these high-risk users cancel.</p>
             </div>
         </section>
 
-        <section class="bg-zinc-950/30 border border-zinc-900 p-4 rounded-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-            <div class="max-w-md">
-                <h4 class="text-xs font-mono font-bold text-white uppercase tracking-wider">Dynamic Churn Shield Sensitivity Engine</h4>
-                <p class="text-[11px] text-zinc-500 mt-0.5">Adjust the sensitivity matrix down to dynamically accelerate targeted marketing interventions on high-decay user clusters.</p>
+        <!-- DYNAMIC CONTROL LAYER -->
+        <section class="bg-zinc-950 border border-zinc-900 p-4 rounded-xl flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="text-left w-full sm:w-auto">
+                <h4 class="text-xs font-bold text-white uppercase tracking-wider">🎯 Automated Offer Trigger Sensitivity</h4>
+                <p class="text-[11px] text-zinc-500 mt-0.5">Change the slider threshold to automatically dispatch retention offers to users whose engagement scores fall below the target marker.</p>
             </div>
-            <div class="w-full md:w-auto flex items-center gap-4 flex-1 justify-end">
-                <input type="range" id="sensitivitySlider" min="10" max="90" value="50" class="w-full max-w-xs h-1 bg-zinc-900 rounded-lg appearance-none cursor-pointer accent-red-600" oninput="runOperationalMetricsPipeline()">
-                <span id="sliderDisplay" class="text-xs font-mono bg-zinc-950 px-2 py-1 border border-zinc-800 rounded text-zinc-300 min-w-[50px] text-center">50%</span>
+            <div class="w-full sm:w-auto flex items-center gap-4">
+                <input type="range" id="sensitivitySlider" min="20" max="80" value="50" class="w-full sm:w-48 h-1 bg-zinc-900 rounded appearance-none cursor-pointer accent-red-600" oninput="runOperationalMetricsPipeline()">
+                <span id="sliderDisplay" class="text-xs font-mono bg-zinc-900 px-2 py-1 border border-zinc-800 rounded text-zinc-300 min-w-[45px] text-center">50%</span>
             </div>
         </section>
 
+        <!-- DATA MATRIX WORKSPACE -->
         <section class="grid grid-cols-1 lg:grid-cols-3 gap-6">
             
-            <div class="lg:col-span-2 bg-zinc-950/20 border border-zinc-900 rounded-xl overflow-hidden flex flex-col justify-between">
-                <div class="p-4 border-b border-zinc-900 bg-zinc-950/40 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
+            <!-- Main Context Table -->
+            <div class="lg:col-span-2 bg-zinc-950/40 border border-zinc-900 rounded-xl overflow-hidden flex flex-col justify-between">
+                <div class="p-4 border-b border-zinc-900 bg-zinc-950/60 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
                     <div>
-                        <h3 class="text-xs font-mono font-bold text-white uppercase tracking-wider">Active Memory Segment Data Matrix</h3>
-                        <p class="text-[10px] text-zinc-500 mt-0.5">Displaying localized user array states calculated inside browser cache execution memory blocks.</p>
+                        <h3 class="text-xs font-bold text-white uppercase tracking-wider">Active User Risk Logs</h3>
+                        <p class="text-[11px] text-zinc-500 mt-0.5">Granular look at exactly what users are doing right before deciding to drop their plans.</p>
                     </div>
-                    <div class="flex items-center space-x-2 w-full sm:w-auto">
-                        <select id="deviceFilter" onchange="renderActiveGrid()" class="bg-[#0c0f17] border border-zinc-800 text-[10px] rounded px-2 py-1 text-zinc-300 font-mono focus:outline-none focus:border-red-600 cursor-pointer w-full sm:w-auto">
-                            <option value="All">ALL_DEVICES</option>
-                            <option value="SmartTV">SMART_TV</option>
-                            <option value="Mobile">MOBILE</option>
-                            <option value="Desktop">WEB_DESKTOP</option>
+                    <div class="flex items-center space-x-2 w-full sm:w-auto self-end">
+                        <select id="deviceFilter" onchange="renderActiveGrid()" class="bg-[#0c0f17] border border-zinc-800 text-[10px] rounded px-2 py-1 text-slate-300 font-mono focus:outline-none focus:border-red-600 cursor-pointer">
+                            <option value="All">All Plan Profiles</option>
+                            <option value="Premium">Premium Plan (₹649)</option>
+                            <option value="Standard">Standard Plan (₹499)</option>
+                            <option value="Mobile">Mobile Plan (₹149)</option>
                         </select>
-                        <button onclick="triggerCSVGeneration()" class="bg-red-600/10 hover:bg-red-600 border border-red-500/20 text-red-400 hover:text-white font-mono text-[10px] px-2.5 py-1 rounded transition-colors whitespace-nowrap cursor-pointer">
-                            EXPORT_TELEMETRY
-                        </button>
                     </div>
                 </div>
 
-                <div class="overflow-x-auto flex-1 min-h-[350px]">
-                    <table class="w-full text-left border-collapse text-[11px]">
+                <div class="overflow-x-auto min-h-[320px]">
+                    <table class="w-full text-left border-collapse text-xs">
                         <thead>
-                            <tr class="bg-[#0b0e14] border-b border-zinc-900 text-zinc-500 font-mono font-semibold uppercase tracking-wider">
-                                <th class="p-3">ACCOUNT SIGNATURE</th>
-                                <th class="p-3">PLATFORM ENVIROMENT</th>
-                                <th class="p-3">LAST ACTION</th>
-                                <th class="p-3">LIFETIME MRR VALUE</th>
-                                <th class="p-3">ENGAGEMENT INDEX</th>
-                                <th class="p-3">PIPELINE AUTOMATION THRESHOLD</th>
+                            <tr class="bg-[#0b0e14] border-b border-zinc-900 text-zinc-500 font-semibold uppercase tracking-wider text-[10px]">
+                                <th class="p-3">User ID</th>
+                                <th class="p-3">Plan Type</th>
+                                <th class="p-3">Last Live Action</th>
+                                <th class="p-3">Plan Price</th>
+                                <th class="p-3">Engagement Health</th>
+                                <th class="p-3">Automated System Action</th>
                             </tr>
                         </thead>
                         <tbody id="stream-table-body" class="divide-y divide-zinc-900/40 text-zinc-300 font-mono">
-                            </tbody>
+                            <!-- Injected by pipeline execution -->
+                        </tbody>
                     </table>
                 </div>
             </div>
 
+            <!-- Side Visual Charts Panel -->
             <div class="space-y-6">
-                <div class="bg-zinc-950/20 border border-zinc-900 p-4 rounded-xl h-48 flex flex-col justify-between">
-                    <span class="text-[10px] font-mono font-bold text-zinc-400 uppercase tracking-wider block">Live Stream Ingest Category Breakdown</span>
+                <div class="bg-zinc-950/40 border border-zinc-900 p-4 rounded-xl h-48 flex flex-col justify-between">
+                    <span class="text-[10px] font-bold text-zinc-400 uppercase tracking-wider block">Risk Distribution by Plan Type</span>
                     <div class="h-36 relative w-full flex items-center justify-center">
                         <canvas id="donutChart"></canvas>
                     </div>
                 </div>
 
-                <div class="bg-zinc-950/20 border border-zinc-900 p-4 rounded-xl h-56 flex flex-col justify-between">
-                    <span class="text-[10px] font-mono font-bold text-zinc-400 uppercase tracking-wider block">Raw Telemetry Event Packet Stack</span>
-                    <div class="bg-[#04060a] border border-zinc-900 rounded p-2.5 h-40 overflow-y-auto text-[9px] font-mono text-red-400/90 scrollbar-thin leading-relaxed">
-                        <pre id="json-debugger" class="whitespace-pre-wrap font-mono">// Connecting to real-time event distribution router framework...</pre>
+                <div class="bg-zinc-950/40 border border-zinc-900 p-4 rounded-xl h-52 flex flex-col justify-between">
+                    <span class="text-[10px] font-bold text-zinc-400 uppercase tracking-wider block">Developer JSON Payload Stream</span>
+                    <div class="bg-[#04060a] border border-zinc-900 rounded p-2 h-36 overflow-y-auto text-[9px] font-mono text-cyan-400/90 leading-relaxed">
+                        <pre id="json-debugger" class="whitespace-pre-wrap font-mono">// Awaiting stream packet sequence...</pre>
                     </div>
                 </div>
             </div>
         </section>
     </main>
 
+    <!-- Project Logic Script Engine -->
     <script>
         let pipelineActive = true;
         let streamTimer = null;
         let recordIncrementCounter = 0;
-        let runningMitigationTriggers = 0;
         
+        // Configured directly with realistic Indian Rupee Pricing Models
         let localTelemetryCache = [
-            { id: "NETFLIX-9182", device: "SmartTV", lastAction: "Session Timeout (Idle)", value: 22, score: 28, trigger: "Queue Content Renewal Email" },
-            { id: "NETFLIX-4019", device: "Mobile",  lastAction: "Search Exited Empty",    value: 15, score: 35, trigger: "Push Personalized Discount Token" },
-            { id: "NETFLIX-3391", device: "Desktop", lastAction: "Series Episode Skipped", value: 15, score: 78, trigger: "Recalculate Recommendation Matrix" },
-            { id: "NETFLIX-8762", device: "SmartTV", lastAction: "Playback Paused 40m+",   value: 22, score: 45, trigger: "No Intervention Required" },
-            { id: "NETFLIX-1102", device: "Mobile",  lastAction: "Account Settings Checked",value: 7,  score: 19, trigger: "Trigger Immediate Exit Survey Offer" }
+            { id: "IN-USER-902", tier: "Premium", lastAction: "App Idle >45 Minutes", value: 649, score: 18, trigger: "Queue Plan Renewal Discount" },
+            { id: "IN-USER-431", tier: "Standard", lastAction: "Empty Search Outcome", value: 499, score: 35, trigger: "Push Top-Trending SMS Alert" },
+            { id: "IN-USER-119", tier: "Mobile",  lastAction: "Episode Skipped Twice", value: 149, score: 78, trigger: "No Intervention Required" },
+            { id: "IN-USER-776", tier: "Premium", lastAction: "Settings Panel Checked", value: 649, score: 22, trigger: "Queue Plan Renewal Discount" },
+            { id: "IN-USER-330", tier: "Mobile",  lastAction: "App Idle >45 Minutes", value: 149, score: 85, trigger: "No Intervention Required" }
         ];
 
         recordIncrementCounter = localTelemetryCache.length;
 
-        const devicePool = ["SmartTV", "Mobile", "Desktop"];
-        const subscriptionValues = { "SmartTV": 22, "Mobile": 7, "Desktop": 15 };
+        const tiersPool = ["Premium", "Standard", "Mobile"];
+        const valuesPool = { "Premium": 649, "Standard": 499, "Mobile": 149 };
         const actionsPool = [
-            "Playback Paused 40m+",
-            "Session Timeout (Idle)",
-            "Search Exited Empty",
-            "Series Episode Skipped",
-            "Account Settings Checked",
-            "Audio Profile Toggled"
+            "App Idle >45 Minutes",
+            "Empty Search Outcome",
+            "Episode Skipped Twice",
+            "Payment Method Changed",
+            "Profile Deletion Screen Viewed"
         ];
 
         let donutChartInstance = null;
 
-        // Ingestion Computational Engine Block
         function runOperationalMetricsPipeline() {
             const currentSliderVal = document.getElementById('sensitivitySlider').value;
             document.getElementById('sliderDisplay').innerText = currentSliderVal + "%";
 
-            const combinedFinancialPool = localTelemetryCache.reduce((sum, item) => sum + item.value, 0);
-            const highRiskProfilesCount = localTelemetryCache.filter(item => item.score < 40).length;
+            // Find at-risk revenue for items under the risk threshold
+            const highRiskProfiles = localTelemetryCache.filter(item => item.score < 50);
+            const highRiskCount = highRiskProfiles.length;
+            const combinedFinancialPool = highRiskProfiles.reduce((sum, item) => sum + item.value, 0);
 
             document.getElementById('kpi-events').innerText = recordIncrementCounter;
-            document.getElementById('kpi-risk-profiles').innerText = highRiskProfilesCount;
-            document.getElementById('kpi-value').innerText = "$" + combinedFinancialPool.toLocaleString();
-            document.getElementById('kpi-mitigated').innerText = runningMitigationTriggers;
+            document.getElementById('kpi-risk-profiles').innerText = highRiskCount;
+            document.getElementById('kpi-value').innerText = "₹" + combinedFinancialPool.toLocaleString('en-IN');
 
             document.getElementById('json-debugger').innerText = JSON.stringify(localTelemetryCache, null, 2);
             
             updateVisualAnalytics();
         }
 
-        // Live Event Telemetry Streaming Simulator
         function simulateIncomingTelemetryTraffic() {
             if (!pipelineActive) return;
 
             recordIncrementCounter++;
-            const randomDevice = devicePool[Math.floor(Math.random() * devicePool.length)];
+            const randomTier = tiersPool[Math.floor(Math.random() * tiersPool.length)];
             const computedScore = Math.floor(Math.random() * (95 - 10 + 1)) + 10;
             const currentSliderVal = document.getElementById('sensitivitySlider').value;
 
-            // Automation orchestration engine based on calculations rules
             let systemResponseAction = "No Intervention Required";
-            if (computedScore < 20) {
-                systemResponseAction = "Trigger Immediate Exit Survey Offer";
-                runningMitigationTriggers++;
+            if (computedScore < 25) {
+                systemResponseAction = "Dispatch High Priority Support Call";
             } else if (computedScore < currentSliderVal) {
-                systemResponseAction = "Push Personalized Discount Token";
-                runningMitigationTriggers++;
-            } else if (computedScore < 60) {
-                systemResponseAction = "Recalculate Recommendation Matrix";
+                systemResponseAction = "Queue Plan Renewal Discount";
             }
 
             const activePacket = {
-                id: `NETFLIX-${Math.floor(1000 + Math.random() * 9000)}`,
-                device: randomDevice,
+                id: `IN-USER-${Math.floor(100 + Math.random() * 900)}`,
+                tier: randomTier,
                 lastAction: actionsPool[Math.floor(Math.random() * actionsPool.length)],
-                value: subscriptionValues[randomDevice],
+                value: valuesPool[randomTier],
                 score: computedScore,
                 trigger: systemResponseAction
             };
 
             localTelemetryCache.unshift(activePacket);
-            if (localTelemetryCache.length > 8) {
+            if (localTelemetryCache.length > 7) {
                 localTelemetryCache.pop();
             }
 
@@ -210,83 +211,60 @@
             runOperationalMetricsPipeline();
         }
 
-        // UI Grid DOM Updates
         function renderActiveGrid() {
-            const currentDeviceFilter = document.getElementById('deviceFilter').value;
+            const currentFilter = document.getElementById('deviceFilter').value;
             const targetContainer = document.getElementById('stream-table-body');
             targetContainer.innerHTML = '';
 
             const computationalFilter = localTelemetryCache.filter(row => {
-                return currentDeviceFilter === "All" || row.device === currentDeviceFilter;
+                return currentFilter === "All" || row.tier === currentFilter;
             });
 
             computationalFilter.forEach(item => {
                 const tableRow = document.createElement('tr');
-                tableRow.className = "hover:bg-zinc-900/40 border-b border-zinc-900/60 transition-all duration-75";
+                tableRow.className = "hover:bg-zinc-900/40 border-b border-zinc-900/60 transition-colors";
                 
-                const platformBadgeStyle = item.device === 'SmartTV' ? 'text-red-400 bg-red-500/10 border border-red-500/20' :
-                                            item.device === 'Mobile' ? 'text-amber-400 bg-amber-500/10 border border-amber-500/20' :
-                                            'text-zinc-400 bg-zinc-800 border border-zinc-700';
+                const platformBadgeStyle = item.tier === 'Premium' ? 'text-purple-400 bg-purple-500/10 border border-purple-500/20' :
+                                            item.tier === 'Standard' ? 'text-cyan-400 bg-cyan-500/10 border border-cyan-500/20' :
+                                            'text-amber-400 bg-amber-500/10 border border-amber-500/20';
 
-                const scoreTextTheme = item.score < 40 ? 'text-red-500 font-bold' : 'text-zinc-400';
-                const actionBadgeStyle = item.score < 40 ? 'bg-red-950 text-red-400 border border-red-900 animate-pulse' : 'bg-zinc-900 border border-zinc-800 text-zinc-500';
+                const scoreTextTheme = item.score < 50 ? 'text-red-400 font-bold' : 'text-emerald-400';
+                const actionBadgeStyle = item.score < 50 ? 'bg-red-950 text-red-400 border border-red-900/50' : 'bg-zinc-900 text-zinc-500 border border-zinc-800';
 
                 tableRow.innerHTML = `
                     <td class="p-3 font-semibold text-zinc-400">${item.id}</td>
-                    <td class="p-3"><span class="px-1.5 py-0.5 rounded text-[9px] font-mono tracking-wider font-bold ${platformBadgeStyle}">${item.device.toUpperCase()}</span></td>
+                    <td class="p-3"><span class="px-1.5 py-0.5 rounded text-[9px] font-bold ${platformBadgeStyle}">${item.tier.toUpperCase()}</span></td>
                     <td class="p-3 text-zinc-300 font-medium">${item.lastAction}</td>
-                    <td class="p-3 font-bold text-white">$${item.value}/mo</td>
+                    <td class="p-3 font-bold text-white">₹${item.value}</td>
                     <td class="p-3">
                         <div class="flex items-center space-x-2">
                             <div class="w-16 bg-zinc-900 h-1 rounded overflow-hidden">
-                                <div class="bg-gradient-to-r from-red-600 to-emerald-500 h-full" style="width: ${item.score}%"></div>
+                                <div class="bg-gradient-to-r from-red-500 to-emerald-500 h-full" style="width: ${item.score}%"></div>
                             </div>
-                            <span class="font-mono ${scoreTextTheme}">${item.score}%</span>
+                            <span class="${scoreTextTheme}">${item.score}%</span>
                         </div>
                     </td>
-                    <td class="p-3"><span class="px-1.5 py-0.5 rounded text-[9px] ${actionBadgeStyle}">⚙️ ${item.trigger}</span></td>
+                    <td class="p-3"><span class="px-1.5 py-0.5 rounded text-[9px] font-medium ${actionBadgeStyle}">${item.trigger}</span></td>
                 `;
                 targetContainer.appendChild(tableRow);
             });
         }
 
-        // Structural CSV Generation Export Layer
-        function triggerCSVGeneration() {
-            let csvPayload = "data:text/csv;charset=utf-8,ACCOUNT_ID,DEVICE,LAST_ACTION,VALUE,ENGAGEMENT_SCORE,AUTOMATION_TRIGGER\n";
-            localTelemetryCache.forEach(node => {
-                csvPayload += `${node.id},${node.device},${node.lastAction},${node.value},${node.score}%,${node.trigger}\n`;
-            });
-            const encodedUriString = encodeURI(csvPayload);
-            const anchorElement = document.createElement("a");
-            anchorElement.setAttribute("href", encodedUriString);
-            anchorElement.setAttribute("download", `NETFLIX_METRICS_DUMP.csv`);
-            document.body.appendChild(anchorElement);
-            anchorElement.click();
-            document.body.removeChild(anchorElement);
-        }
-
         function toggleTelemetryStream() {
             pipelineActive = !pipelineActive;
             const actionButton = document.getElementById('streamBtn');
-            if(pipelineActive) {
-                actionButton.innerText = "⏸ PAUSE TELEMETRY";
-                actionButton.className = "bg-red-600/10 hover:bg-red-600 border border-red-600/30 text-red-500 hover:text-white font-mono font-bold text-[10px] px-3 py-1.5 rounded cursor-pointer transition-colors";
-            } else {
-                actionButton.innerText = "▶️ RESUME TELEMETRY";
-                actionButton.className = "bg-emerald-600/10 hover:bg-emerald-600 border border-emerald-500/20 text-emerald-400 hover:text-white font-mono font-bold text-[10px] px-3 py-1.5 rounded cursor-pointer transition-colors";
-            }
+            actionButton.innerText = pipelineActive ? "⏸ PAUSE STREAM" : "▶️ RESUME STREAM";
         }
 
-        // Charting Visualization Layers
         function initCharts() {
             const canvasContext = document.getElementById('donutChart').getContext('2d');
             donutChartInstance = new Chart(canvasContext, {
                 type: 'doughnut',
                 data: {
-                    labels: ['SmartTV', 'Mobile', 'Desktop'],
+                    labels: ['Premium', 'Standard', 'Mobile'],
                     datasets: [{
                         data: [0, 0, 0],
-                        backgroundColor: ['#dc2626', '#d97706', '#4b5563'],
+                        backgroundColor: ['#a855f7', '#06b6d4', '#f59e0b'],
                         borderWidth: 0
                     }]
                 },
@@ -299,23 +277,21 @@
 
         function updateVisualAnalytics() {
             if (!donutChartInstance) return;
-            const aggregateAllocation = { 'SmartTV': 0, 'Mobile': 0, 'Desktop': 0 };
-            localTelemetryCache.forEach(item => aggregateAllocation[item.device]++);
+            const aggregateAllocation = { 'Premium': 0, 'Standard': 0, 'Mobile': 0 };
+            localTelemetryCache.forEach(item => aggregateAllocation[item.tier]++);
             
             donutChartInstance.data.datasets[0].data = [
-                aggregateAllocation['SmartTV'], 
-                aggregateAllocation['Mobile'], 
-                aggregateAllocation['Desktop']
+                aggregateAllocation['Premium'], 
+                aggregateAllocation['Standard'], 
+                aggregateAllocation['Mobile']
             ];
             donutChartInstance.update();
         }
 
-        // Framework Initialization Bootstrapping Hook
         window.onload = function() {
             initCharts();
             renderActiveGrid();
             runOperationalMetricsPipeline();
-            
             streamTimer = setInterval(simulateIncomingTelemetryTraffic, 1800);
         };
     </script>
