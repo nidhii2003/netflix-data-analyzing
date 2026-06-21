@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enterprise Streaming ETL & Retention Control Engine</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-[#080b11] text-slate-300 min-h-screen font-sans antialiased selection:bg-indigo-500 selection:text-white">
+
+    <header class="border-b border-slate-900 bg-[#080b11]/80 backdrop-blur sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="h-9 w-9 bg-gradient-to-tr from-indigo-600 to-cyan-500 rounded-xl flex items-center justify-center font-bold text-white shadow-lg shadow-indigo-500/10 animate-pulse">
+                    ⚙️
+                </div>
+                <div>
+                    <span class="font-bold text-xs font-mono tracking-wider text-white block">STREAM_ETL // ENGINE_V2</span>
+                    <span class="text-[9px] text-emerald-400 font-mono tracking-widest uppercase block flex items-center gap-1">
+                        <span class="h-1.5 w-1.5 rounded-full bg-emerald-400 inline-block animate-ping"></span> PIPELINE ACTIVE
+                    </span>
+                </div>
+            </div>
+            <div class="flex items-center space-x-3">
+                <button onclick="togglePipeline()" id="pipelineBtn" class="bg-rose-600 hover:bg-rose-500 text-white font-mono font-bold text-[10px] px-3 py-1.5 rounded border border-rose-500/20 cursor-pointer transition-colors">
+                    ⏸ PAUSE STREAM
+                </button>
+                <span class="hidden md:inline px-2.5 py-1 rounded text-[10px] font-mono font-bold bg-slate-900 border border-slate-800 text-slate-400">ATS LEVEL: SENIOR ARCHITECT</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
+        
+        <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div class="bg-slate-900/40 border border-slate-800 p-4 rounded-xl">
+                <span class="text-[9px] font-mono font-bold text-slate-500 uppercase tracking-wider block">Ingested Records Count</span>
+                <span class="text-2xl font-mono font-black text-white mt-1 block" id="kpi-ingested">0</span>
+                <span class="text-[9px] text-indigo-400 font-mono mt-0.5 block" id="kpi-rate">+2.5s streaming interval</span>
+            </div>
+            <div class="bg-slate-900/40 border border-slate-800 p-4 rounded-xl">
+                <span class="text-[9px] font-mono font-bold text-slate-500 uppercase tracking-wider block">Live Mitigated Capital</span>
+                <span class="text-2xl font-mono font-black text-emerald-400 mt-1 block" id="kpi-mitigated">$0.00</span>
+                <span class="text-[9px] text-slate-500 font-mono mt-0.5 block">Triggered by simulator slider</span>
+            </div>
+            <div class="bg-slate-900/40 border border-slate-800 p-4 rounded-xl">
+                <span class="text-[9px] font-mono font-bold text-slate-500 uppercase tracking-wider block">High Risk Outliers Flagged</span>
+                <span class="text-2xl font-mono font-black text-rose-400 mt-1 block" id="kpi-outliers">0</span>
+                <span class="text-[9px] text-rose-500/60 font-mono mt-0.5 block">Risk score threshold > 80%</span>
+            </div>
+            <div class="bg-slate-900/40 border border-slate-800 p-4 rounded-xl">
+                <span class="text-[9px] font-mono font-bold text-slate-500 uppercase tracking-wider block">Aggregated Pool Value (MRR)</span>
+                <span class="text-2xl font-mono font-black text-amber-400 mt-1 block" id="kpi-mrr">$0</span>
+                <span class="text-[9px] text-slate-500 font-mono mt-0.5 block">Active cache allocation</span>
+            </div>
+        </section>
+
+        <section class="bg-slate-900/20 border border-slate-800 p-4 rounded-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+            <div class="max-w-md">
+                <h4 class="text-xs font-mono font-bold text-white uppercase tracking-wider">Algorithmic Predictive Churn Shield Mitigation Factor</h4>
+                <p class="text-[11px] text-slate-500 mt-0.5">Adjust the hypothetical mitigation slider to re-calculate capital protection across the active streaming buffer matrix.</p>
+            </div>
+            <div class="w-full md:w-auto flex items-center gap-4 flex-1 justify-end">
+                <input type="range" id="roiSlider" min="0" max="100" value="40" class="w-full max-w-xs h-1 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-indigo-500" oninput="runDataPipelineCalculations()">
+                <span id="sliderDisplay" class="text-xs font-mono bg-slate-900 px-2 py-1 border border-slate-800 rounded text-slate-300 min-w-[50px] text-center">40%</span>
+            </div>
+        </section>
+
+        <section class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            
+            <div class="lg:col-span-2 bg-slate-900/20 border border-slate-800 rounded-xl overflow-hidden flex flex-col justify-between">
+                <div class="p-4 border-b border-slate-800 bg-slate-900/40 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
+                    <div>
+                        <h3 class="text-xs font-mono font-bold text-white uppercase tracking-wider">Streaming Cluster Target Cache</h3>
+                        <p class="text-[10px] text-slate-500 mt-0.5">Displaying the most recent active risk arrays currently held in client-side memory stack.</p>
+                    </div>
+                    <div class="flex items-center space-x-2 w-full sm:w-auto">
+                        <select id="tierFilter" onchange="renderActiveGrid()" class="bg-[#0c0f17] border border-slate-800 text-[10px] rounded px-2 py-1 text-slate-300 font-mono focus:outline-none focus:border-indigo-500 cursor-pointer w-full sm:w-auto">
+                            <option value="All">ALL_TIERS</option>
+                            <option value="Premium">PREMIUM_ONLY</option>
+                            <option value="Standard">STANDARD_ONLY</option>
+                            <option value="Basic">BASIC_ONLY</option>
+                        </select>
+                        <button onclick="triggerCSVGeneration()" class="bg-indigo-600/20 hover:bg-indigo-600 border border-indigo-500/30 text-indigo-400 hover:text-white font-mono text-[10px] px-2.5 py-1 rounded transition-colors whitespace-nowrap cursor-pointer">
+                            EXPORT_CSV
+                        </button>
+                    </div>
+                </div>
+
+                <div class="overflow-x-auto flex-1 min-h-[340px]">
+                    <table class="w-full text-left border-collapse text-[11px]">
+                        <thead>
+                            <tr class="bg-[#0b0e14] border-b border-slate-800 text-slate-500 font-mono font-semibold uppercase tracking-wider">
+                                <th class="p-3">UID SIGNATURE</th>
+                                <th class="p-3">TIER</th>
+                                <th class="p-3">TENURE</th>
+                                <th class="p-3">VALUATION (MRR)</th>
+                                <th class="p-3">RISK VECTOR</th>
+                                <th class="p-3">ANOMALY EXCEPTION DIAGNOSTIC</th>
+                            </tr>
+                        </thead>
+                        <tbody id="stream-table-body" class="divide-y divide-slate-800/40 text-slate-300 font-mono">
+                            </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="space-y-6">
+                <div class="bg-slate-900/20 border border-slate-800 p-4 rounded-xl h-48 flex flex-col justify-between">
+                    <span class="text-[10px] font-mono font-bold text-slate-400 uppercase tracking-wider block">Real-time Churn Breakdown Allocation</span>
+                    <div class="h-36 relative w-full flex items-center justify-center">
+                        <canvas id="donutChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="bg-slate-900/20 border border-slate-800 p-4 rounded-xl h-52 flex flex-col justify-between">
+                    <span class="text-[10px] font-mono font-bold text-slate-400 uppercase tracking-wider block">Raw Streaming Data Packet Terminal View</span>
+                    <div class="bg-[#04060a] border border-slate-900 rounded p-2.5 h-36 overflow-y-auto text-[9px] font-mono text-cyan-400/90 scrollbar-thin leading-relaxed selection:bg-slate-800">
+                        <pre id="json-debugger" class="whitespace-pre-wrap font-mono">// Initializing message queue consumer runtime context...</pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // 1. Initial Cluster Memory Cache Setup
+        let pipelineActive = true;
+        let streamTimer = null;
+        let recordIncrementCounter = 0;
+        
+        let streamingClusterCache = [
+            { uid: "USR-8820", tier: "Premium", tenure: 1,  mrr: 149, risk: 96, context: "Immediate Drop-off Flag" },
+            { uid: "USR-9021", tier: "Premium", tenure: 14, mrr: 149, risk: 88, context: "Critical Overdue Ticket" },
+            { uid: "USR-5491", tier: "Standard", tenure: 5,  mrr: 79,  risk: 82, context: "Failed Routing Gateway" },
+            { uid: "USR-4310", tier: "Standard", tenure: 3,  mrr: 79,  risk: 74, context: "Failed Routing Gateway" },
+            { uid: "USR-3301", tier: "Basic",    tenure: 8,  mrr: 29,  risk: 71, context: "Zero User Session Ingress" }
+        ];
+
+        recordIncrementCounter = streamingClusterCache.length;
+
+        // Metadata definitions used to dynamically mock stream iterations
+        const tiersPool = ["Premium", "Standard", "Basic"];
+        const valuesPool = { "Premium": 149, "Standard": 79, "Basic": 29 };
+        const diagnosticPool = [
+            "Zero User Session Ingress", 
+            "Failed Routing Gateway", 
+            "Critical Overdue Ticket", 
+            "API Authentication Decay",
+            "Billing Integration Refusal"
+        ];
+
+        let donutChartInstance = null;
+
+        // 2. Data Pipeline Mathematical Operations Layer
+        function runDataPipelineCalculations() {
+            const sliderValue = document.getElementById('roiSlider').value;
+            document.getElementById('sliderDisplay').innerText = sliderValue + "%";
+
+            // Aggregate metrics over cluster cache array
+            const totalMRRPool = streamingClusterCache.reduce((sum, item) => sum + item.mrr, 0);
+            const outlierCount = streamingClusterCache.filter(item => item.risk > 80).length;
+            
+            // Apply slider coefficient against high risk evaluation vector rows
+            const highRiskCapitalValuation = streamingClusterCache
+                .filter(item => item.risk > 80)
+                .reduce((sum, item) => sum + item.mrr, 0);
+            const mitigatedCapitalResult = (highRiskCapitalValuation * (sliderValue / 100)).toFixed(2);
+
+            // Update DOM UI Matrix Targets
+            document.getElementById('kpi-ingested').innerText = recordIncrementCounter;
+            document.getElementById('kpi-outliers').innerText = outlierCount;
+            document.getElementById('kpi-mrr').innerText = "$" + totalMRRPool.toLocaleString();
+            document.getElementById('kpi-mitigated').innerText = "$" + Number(mitigatedCapitalResult).toLocaleString();
+
+            // Dump data schema variables to terminal view container element
+            document.getElementById('json-debugger').innerText = JSON.stringify(streamingClusterCache, null, 2);
+            
+            updateVisualAnalytics();
+        }
+
+        // 3. Automated Stream Ingestion Simulation Logic
+        function triggerStreamIngestionCycle() {
+            if (!pipelineActive) return;
+
+            recordIncrementCounter++;
+            const generatedTier = tiersPool[Math.floor(Math.random() * tiersPool.length)];
+            const generatedRisk = Math.floor(Math.random() * (99 - 40 + 1)) + 40; // Simulated risk probability calculations 
+
+            const realTimePacket = {
+                uid: `USR-${Math.floor(1000 + Math.random() * 9000)}`,
+                tier: generatedTier,
+                tenure: Math.floor(Math.random() * 24) + 1,
+                mrr: valuesPool[generatedTier],
+                risk: generatedRisk,
+                context: diagnosticPool[Math.floor(Math.random() * diagnosticPool.length)]
+            };
+
+            // Unshift target packet into stack, enforcing an array size ceiling constraint of 8 records maximum
+            streamingClusterCache.unshift(realTimePacket);
+            if (streamingClusterCache.length > 8) {
+                streamingClusterCache.pop();
+            }
+
+            renderActiveGrid();
+            runDataPipelineCalculations();
+        }
+
+        // 4. View Rendering Matrix Operations
+        function renderActiveGrid() {
+            const currentFilterSelection = document.getElementById('tierFilter').value;
+            const targetContainerBody = document.getElementById('stream-table-body');
+            targetContainerBody.innerHTML = '';
+
+            const computationalDataFilter = streamingClusterCache.filter(row => {
+                return currentFilterSelection === "All" || row.tier === currentFilterSelection;
+            });
+
+            computationalDataFilter.forEach(item => {
+                const trElement = document.createElement('tr');
+                trElement.className = "hover:bg-slate-900/60 border-b border-slate-900/60 transition-all duration-75";
+                
+                const tierThemeClass = item.tier === 'Premium' ? 'text-purple-400 bg-purple-500/10 border border-purple-500/20' :
+                                       item.tier === 'Standard' ? 'text-cyan-400 bg-cyan-500/10 border border-cyan-500/20' :
+                                       'text-slate-400 bg-slate-800 border border-slate-700';
+
+                const riskTextClass = item.risk >= 85 ? 'text-rose-400 font-bold' : 'text-amber-400';
+                const statusBadgeStyle = item.risk >= 85 ? 'bg-rose-500/10 border border-rose-500/20 text-rose-400 animate-pulse' : 'bg-slate-900 text-slate-400 border border-slate-800';
+
+                trElement.innerHTML = `
+                    <td class="p-3 font-semibold text-slate-400">${item.uid}</td>
+                    <td class="p-3"><span class="px-1.5 py-0.5 rounded text-[9px] font-bold ${tierThemeClass}">${item.tier.toUpperCase()}</span></td>
+                    <td class="p-3 text-slate-400">${item.tenure}m</td>
+                    <td class="p-3 font-bold text-white">$${item.mrr}</td>
+                    <td class="p-3"><span class="${riskTextClass}">${item.risk}%</span></td>
+                    <td class="p-3"><span class="px-1.5 py-0.5 rounded text-[9px] ${statusBadgeStyle}">⚠️ ${item.context}</span></td>
+                `;
+                targetContainerBody.appendChild(trElement);
+            });
+        }
+
+        // 5. Native CSV Content Compilation Output Generator Engine
+        function triggerCSVGeneration() {
+            let csvPayloadContent = "data:text/csv;charset=utf-8,UID_SIGNATURE,PROFILE_TIER,TENURE,VALUATION_MRR,RISK_SCORE,DIAGNOSTIC\n";
+            streamingClusterCache.forEach(node => {
+                csvPayloadContent += `${node.uid},${node.tier},${node.tenure},${node.mrr},${node.risk}%,${node.context}\n`;
+            });
+            const schemaUriTarget = encodeURI(csvPayloadContent);
+            const anchorTriggerElement = document.createElement("a");
+            anchorTriggerElement.setAttribute("href", schemaUriTarget);
+            anchorTriggerElement.setAttribute("download", `STREAM_ETL_CACHE_EXPORT.csv`);
+            document.body.appendChild(anchorTriggerElement);
+            anchorTriggerElement.click();
+            document.body.removeChild(anchorTriggerElement);
+        }
+
+        function togglePipeline() {
+            pipelineActive = !pipelineActive;
+            const operationalButton = document.getElementById('pipelineBtn');
+            if(pipelineActive) {
+                operationalButton.innerText = "⏸ PAUSE STREAM";
+                operationalButton.className = "bg-rose-600 hover:bg-rose-500 text-white font-mono font-bold text-[10px] px-3 py-1.5 rounded border border-rose-500/20 cursor-pointer transition-colors";
+            } else {
+                operationalButton.innerText = "▶️ RESUME STREAM";
+                operationalButton.className = "bg-emerald-600 hover:bg-emerald-500 text-white font-mono font-bold text-[10px] px-3 py-1.5 rounded border border-emerald-500/20 cursor-pointer transition-colors";
+            }
+        }
+
+        // 6. Dynamic Chart Initialization Framework Canvas Management
+        function initChartGraphicsEngine() {
+            const canvasCtx = document.getElementById('donutChart').getContext('2d');
+            donutChartInstance = new Chart(canvasCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Premium', 'Standard', 'Basic'],
+                    datasets: [{
+                        data: [0, 0, 0],
+                        backgroundColor: ['#6366f1', '#06b6d4', '#475569'],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    plugins: { legend: { position: 'right', labels: { color: '#64748b', font: { size: 9, family: 'monospace' } } } }
+                }
+            });
+        }
+
+        function updateVisualAnalytics() {
+            if (!donutChartInstance) return;
+            const countAllocation = { 'Premium': 0, 'Standard': 0, 'Basic': 0 };
+            streamingClusterCache.forEach(item => countAllocation[item.tier]++);
+            
+            donutChartInstance.data.datasets[0].data = [
+                countAllocation['Premium'], 
+                countAllocation['Standard'], 
+                countAllocation['Basic']
+            ];
+            donutChartInstance.update();
+        }
+
+        // Programmatic Bootstrapping Engine Hook Execution
+        window.onload = function() {
+            initChartGraphicsEngine();
+            renderActiveGrid();
+            runDataPipelineCalculations();
+            
+            // Start the asynchronous execution cycle simulations loop 
+            streamTimer = setInterval(triggerStreamIngestionCycle, 2500);
+        };
+    </script>
+</body>
+</html>
