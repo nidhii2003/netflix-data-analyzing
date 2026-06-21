@@ -3,20 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Netflix India User Retention Command Deck</title>
-    <!-- Tailwind CSS -->
+    <title>Netflix India Stateful User Retention Command Deck</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body class="bg-[#0a0d14] text-slate-300 min-h-screen font-sans antialiased selection:bg-red-600 selection:text-white">
 
-    <!-- Top Simplified Bar -->
     <header class="border-b border-zinc-900 bg-[#0a0d14]/90 backdrop-blur sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
             <div class="flex items-center space-x-3">
                 <div class="bg-red-600 px-3 py-1 rounded text-white font-black text-xs tracking-wider">NETFLIX INDIA</div>
-                <span class="text-xs font-mono text-zinc-500 tracking-wider">Live User Behavior Monitor</span>
+                <span class="text-xs font-mono text-zinc-500 tracking-wider">Stateful Real-Time Behavioral Ingestion</span>
             </div>
             <div class="flex items-center space-x-3">
                 <button onclick="toggleTelemetryStream()" id="streamBtn" class="bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-zinc-300 font-mono text-[10px] px-3 py-1.5 rounded cursor-pointer transition-colors">
@@ -28,44 +25,39 @@
 
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
         
-        <!-- CLEAR BUSINESS INSIGHT GRID (Speaks by just looking) -->
         <section class="grid grid-cols-1 md:grid-cols-3 gap-5">
-            <!-- Metric 1 -->
             <div class="bg-gradient-to-br from-zinc-900 to-black border border-zinc-800 p-5 rounded-xl">
                 <div class="flex justify-between items-start">
-                    <span class="text-xs font-bold uppercase tracking-wider text-zinc-400">1. Users Monitored</span>
-                    <span class="text-xs bg-indigo-500/10 text-indigo-400 px-2 py-0.5 rounded font-mono">Real-time Stream</span>
+                    <span class="text-xs font-bold uppercase tracking-wider text-zinc-400">1. Monitored User Ledger</span>
+                    <span class="text-xs bg-indigo-500/10 text-indigo-400 px-2 py-0.5 rounded font-mono">Unique Pool</span>
                 </div>
                 <div class="text-3xl font-black text-white mt-2 font-mono" id="kpi-events">0</div>
-                <p class="text-xs text-zinc-500 mt-2">Total active user events captured in the current session pool.</p>
+                <p class="text-xs text-zinc-500 mt-2">Active unique subscribers tracked in current memory matrix.</p>
             </div>
 
-            <!-- Metric 2 -->
             <div class="bg-gradient-to-br from-zinc-900 to-black border border-zinc-800 p-5 rounded-xl">
                 <div class="flex justify-between items-start">
-                    <span class="text-xs font-bold uppercase tracking-wider text-rose-400">2. High Churn Risk</span>
-                    <span class="text-xs bg-rose-500/10 text-rose-400 px-2 py-0.5 rounded font-mono">Needs Attention</span>
+                    <span class="text-xs font-bold uppercase tracking-wider text-rose-400">2. Active Churn Anomalies</span>
+                    <span class="text-xs bg-rose-500/10 text-rose-400 px-2 py-0.5 rounded font-mono">Critical Score</span>
                 </div>
                 <div class="text-3xl font-black text-rose-500 mt-2 font-mono" id="kpi-risk-profiles">0</div>
-                <p class="text-xs text-zinc-500 mt-2">Users showing sudden drops in streaming watch-time metrics.</p>
+                <p class="text-xs text-zinc-500 mt-2">Unique users whose engagement levels are actively dropping.</p>
             </div>
 
-            <!-- Metric 3 -->
             <div class="bg-gradient-to-br from-zinc-900 to-black border border-zinc-800 p-5 rounded-xl">
                 <div class="flex justify-between items-start">
-                    <span class="text-xs font-bold uppercase tracking-wider text-emerald-400">3. Estimated Revenue Lost</span>
-                    <span class="text-xs bg-emerald-500/10 text-emerald-400 px-2 py-0.5 rounded font-mono">Monthly Rate</span>
+                    <span class="text-xs font-bold uppercase tracking-wider text-emerald-400">3. Monthly Revenue at Risk</span>
+                    <span class="text-xs bg-emerald-500/10 text-emerald-400 px-2 py-0.5 rounded font-mono">INR Evaluation</span>
                 </div>
                 <div class="text-3xl font-black text-emerald-400 mt-2 font-mono" id="kpi-value">₹0</div>
-                <p class="text-xs text-zinc-500 mt-2">Total subscription money lost per month if these high-risk users cancel.</p>
+                <p class="text-xs text-zinc-500 mt-2">Subscription value threatened by current active high-risk clusters.</p>
             </div>
         </section>
 
-        <!-- DYNAMIC CONTROL LAYER -->
         <section class="bg-zinc-950 border border-zinc-900 p-4 rounded-xl flex flex-col sm:flex-row items-center justify-between gap-4">
             <div class="text-left w-full sm:w-auto">
                 <h4 class="text-xs font-bold text-white uppercase tracking-wider">🎯 Automated Offer Trigger Sensitivity</h4>
-                <p class="text-[11px] text-zinc-500 mt-0.5">Change the slider threshold to automatically dispatch retention offers to users whose engagement scores fall below the target marker.</p>
+                <p class="text-[11px] text-zinc-500 mt-0.5">Adjust the automated threshold engine to flag engagement degradation dynamically.</p>
             </div>
             <div class="w-full sm:w-auto flex items-center gap-4">
                 <input type="range" id="sensitivitySlider" min="20" max="80" value="50" class="w-full sm:w-48 h-1 bg-zinc-900 rounded appearance-none cursor-pointer accent-red-600" oninput="runOperationalMetricsPipeline()">
@@ -73,15 +65,13 @@
             </div>
         </section>
 
-        <!-- DATA MATRIX WORKSPACE -->
         <section class="grid grid-cols-1 lg:grid-cols-3 gap-6">
             
-            <!-- Main Context Table -->
             <div class="lg:col-span-2 bg-zinc-950/40 border border-zinc-900 rounded-xl overflow-hidden flex flex-col justify-between">
                 <div class="p-4 border-b border-zinc-900 bg-zinc-950/60 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
                     <div>
-                        <h3 class="text-xs font-bold text-white uppercase tracking-wider">Active User Risk Logs</h3>
-                        <p class="text-[11px] text-zinc-500 mt-0.5">Granular look at exactly what users are doing right before deciding to drop their plans.</p>
+                        <h3 class="text-xs font-bold text-white uppercase tracking-wider">Active User Risk Logs (De-Duplicated)</h3>
+                        <p class="text-[11px] text-zinc-500 mt-0.5">Real-time state tracking updates existing customer records instantly upon new event ingress.</p>
                     </div>
                     <div class="flex items-center space-x-2 w-full sm:w-auto self-end">
                         <select id="deviceFilter" onchange="renderActiveGrid()" class="bg-[#0c0f17] border border-zinc-800 text-[10px] rounded px-2 py-1 text-slate-300 font-mono focus:outline-none focus:border-red-600 cursor-pointer">
@@ -106,13 +96,11 @@
                             </tr>
                         </thead>
                         <tbody id="stream-table-body" class="divide-y divide-zinc-900/40 text-zinc-300 font-mono">
-                            <!-- Injected by pipeline execution -->
-                        </tbody>
+                            </tbody>
                     </table>
                 </div>
             </div>
 
-            <!-- Side Visual Charts Panel -->
             <div class="space-y-6">
                 <div class="bg-zinc-950/40 border border-zinc-900 p-4 rounded-xl h-48 flex flex-col justify-between">
                     <span class="text-[10px] font-bold text-zinc-400 uppercase tracking-wider block">Risk Distribution by Plan Type</span>
@@ -131,23 +119,20 @@
         </section>
     </main>
 
-    <!-- Project Logic Script Engine -->
     <script>
         let pipelineActive = true;
         let streamTimer = null;
-        let recordIncrementCounter = 0;
         
-        // Configured directly with realistic Indian Rupee Pricing Models
-        let localTelemetryCache = [
-            { id: "IN-USER-902", tier: "Premium", lastAction: "App Idle >45 Minutes", value: 649, score: 18, trigger: "Queue Plan Renewal Discount" },
-            { id: "IN-USER-431", tier: "Standard", lastAction: "Empty Search Outcome", value: 499, score: 35, trigger: "Push Top-Trending SMS Alert" },
-            { id: "IN-USER-119", tier: "Mobile",  lastAction: "Episode Skipped Twice", value: 149, score: 78, trigger: "No Intervention Required" },
-            { id: "IN-USER-776", tier: "Premium", lastAction: "Settings Panel Checked", value: 649, score: 22, trigger: "Queue Plan Renewal Discount" },
-            { id: "IN-USER-330", tier: "Mobile",  lastAction: "App Idle >45 Minutes", value: 149, score: 85, trigger: "No Intervention Required" }
-        ];
+        // Use an Object to map unique user states (Prevents any visual duplication bugs)
+        let localTelemetryMap = {
+            "IN-USER-101": { id: "IN-USER-101", tier: "Premium", lastAction: "App Idle >45 Minutes", value: 649, score: 72, trigger: "No Intervention Required", timestamp: Date.now() },
+            "IN-USER-102": { id: "IN-USER-102", tier: "Standard", lastAction: "Empty Search Outcome", value: 499, score: 55, trigger: "No Intervention Required", timestamp: Date.now() - 1000 },
+            "IN-USER-103": { id: "IN-USER-103", tier: "Mobile",  lastAction: "Episode Skipped Twice", value: 149, score: 78, trigger: "No Intervention Required", timestamp: Date.now() - 2000 },
+            "IN-USER-104": { id: "IN-USER-104", tier: "Premium", lastAction: "Settings Panel Checked", value: 649, score: 22, trigger: "Queue Plan Renewal Discount", timestamp: Date.now() - 3000 },
+            "IN-USER-105": { id: "IN-USER-105", tier: "Mobile",  lastAction: "App Idle >45 Minutes", value: 149, score: 85, trigger: "No Intervention Required", timestamp: Date.now() - 4000 }
+        };
 
-        recordIncrementCounter = localTelemetryCache.length;
-
+        const staticUserPool = ["IN-USER-101", "IN-USER-102", "IN-USER-103", "IN-USER-104", "IN-USER-105", "IN-USER-106", "IN-USER-107", "IN-USER-108"];
         const tiersPool = ["Premium", "Standard", "Mobile"];
         const valuesPool = { "Premium": 649, "Standard": 499, "Mobile": 149 };
         const actionsPool = [
@@ -164,16 +149,19 @@
             const currentSliderVal = document.getElementById('sensitivitySlider').value;
             document.getElementById('sliderDisplay').innerText = currentSliderVal + "%";
 
-            // Find at-risk revenue for items under the risk threshold
-            const highRiskProfiles = localTelemetryCache.filter(item => item.score < 50);
+            const usersArray = Object.values(localTelemetryMap);
+            const totalUniqueUsers = usersArray.length;
+            
+            // Calculate metrics strictly against the high-risk filter segment window
+            const highRiskProfiles = usersArray.filter(item => item.score < 50);
             const highRiskCount = highRiskProfiles.length;
             const combinedFinancialPool = highRiskProfiles.reduce((sum, item) => sum + item.value, 0);
 
-            document.getElementById('kpi-events').innerText = recordIncrementCounter;
+            document.getElementById('kpi-events').innerText = totalUniqueUsers;
             document.getElementById('kpi-risk-profiles').innerText = highRiskCount;
             document.getElementById('kpi-value').innerText = "₹" + combinedFinancialPool.toLocaleString('en-IN');
 
-            document.getElementById('json-debugger').innerText = JSON.stringify(localTelemetryCache, null, 2);
+            document.getElementById('json-debugger').innerText = JSON.stringify(localTelemetryMap, null, 2);
             
             updateVisualAnalytics();
         }
@@ -181,8 +169,8 @@
         function simulateIncomingTelemetryTraffic() {
             if (!pipelineActive) return;
 
-            recordIncrementCounter++;
-            const randomTier = tiersPool[Math.floor(Math.random() * tiersPool.length)];
+            // Pick an ID from our static pool (Simulating updates to existing active connections)
+            const targetUserId = staticUserPool[Math.floor(Math.random() * staticUserPool.length)];
             const computedScore = Math.floor(Math.random() * (95 - 10 + 1)) + 10;
             const currentSliderVal = document.getElementById('sensitivitySlider').value;
 
@@ -193,18 +181,25 @@
                 systemResponseAction = "Queue Plan Renewal Discount";
             }
 
-            const activePacket = {
-                id: `IN-USER-${Math.floor(100 + Math.random() * 900)}`,
-                tier: randomTier,
-                lastAction: actionsPool[Math.floor(Math.random() * actionsPool.length)],
-                value: valuesPool[randomTier],
-                score: computedScore,
-                trigger: systemResponseAction
-            };
-
-            localTelemetryCache.unshift(activePacket);
-            if (localTelemetryCache.length > 7) {
-                localTelemetryCache.pop();
+            // Stateful upsert check logic engine
+            if (localTelemetryMap[targetUserId]) {
+                // User exists: Update dynamic metrics in-place
+                localTelemetryMap[targetUserId].lastAction = actionsPool[Math.floor(Math.random() * actionsPool.length)];
+                localTelemetryMap[targetUserId].score = computedScore;
+                localTelemetryMap[targetUserId].trigger = systemResponseAction;
+                localTelemetryMap[targetUserId].timestamp = Date.now(); // Update sort order tracking
+            } else {
+                // User is new: Initialize standard model settings
+                const randomTier = tiersPool[Math.floor(Math.random() * tiersPool.length)];
+                localTelemetryMap[targetUserId] = {
+                    id: targetUserId,
+                    tier: randomTier,
+                    lastAction: actionsPool[Math.floor(Math.random() * actionsPool.length)],
+                    value: valuesPool[randomTier],
+                    score: computedScore,
+                    trigger: systemResponseAction,
+                    timestamp: Date.now()
+                };
             }
 
             renderActiveGrid();
@@ -216,7 +211,10 @@
             const targetContainer = document.getElementById('stream-table-body');
             targetContainer.innerHTML = '';
 
-            const computationalFilter = localTelemetryCache.filter(row => {
+            // Convert map cache to array and sort by most recent updates first
+            const sortedUsers = Object.values(localTelemetryMap).sort((a, b) => b.timestamp - a.timestamp);
+
+            const computationalFilter = sortedUsers.filter(row => {
                 return currentFilter === "All" || row.tier === currentFilter;
             });
 
@@ -250,6 +248,7 @@
             });
         }
 
+        // Toggle stream functions control execution
         function toggleTelemetryStream() {
             pipelineActive = !pipelineActive;
             const actionButton = document.getElementById('streamBtn');
@@ -278,7 +277,7 @@
         function updateVisualAnalytics() {
             if (!donutChartInstance) return;
             const aggregateAllocation = { 'Premium': 0, 'Standard': 0, 'Mobile': 0 };
-            localTelemetryCache.forEach(item => aggregateAllocation[item.tier]++);
+            Object.values(localTelemetryMap).forEach(item => aggregateAllocation[item.tier]++);
             
             donutChartInstance.data.datasets[0].data = [
                 aggregateAllocation['Premium'], 
@@ -292,7 +291,7 @@
             initCharts();
             renderActiveGrid();
             runOperationalMetricsPipeline();
-            streamTimer = setInterval(simulateIncomingTelemetryTraffic, 1800);
+            streamTimer = setInterval(simulateIncomingTelemetryTraffic, 1500);
         };
     </script>
 </body>
